@@ -38,7 +38,11 @@ def enviar():
   if response.status_code == 200:
       return "Mensaje enviado exitosamente. osi osi"
   else:
-      return f"Error al enviar el mensaje: {response.status_code}"
+      print(f"Error al enviar el mensaje: {response.status_code}")
+      print(response.text)
+
+
+f = []
 
 @app.route("/webhook/", methods=["POST", "GET"])
 def webhook_whatsapp():
@@ -56,10 +60,15 @@ def webhook_whatsapp():
     #EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
     mensaje="Telefono:"+data['entry'][0]['changes'][0]['value']['messages'][0]['from']
     mensaje=mensaje+"|Mensaje:"+data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+    #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
+    f.append(mensaje)
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
 
-
+@app.route("/recibir/", methods=["POST", "GET"])
+def recibir():
+    
+    return str(f)
 #INICIAMSO FLASK
 if __name__ == "__main__":
   app.run(debug=True)
