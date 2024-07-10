@@ -36,10 +36,9 @@ def enviar():
 
 # Verificar el resultado
   if response.status_code == 200:
-      print("Mensaje enviado exitosamente")
+      return "Mensaje enviado exitosamente. osi osi"
   else:
-      print(f"Error al enviar el mensaje: {response.status_code}")
-      print(response.text)
+      return f"Error al enviar el mensaje: {response.status_code}"
 #INICIAMSO FLASK
 if __name__ == "__main__":
   app.run(debug=True)
