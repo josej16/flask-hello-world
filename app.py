@@ -56,12 +56,8 @@ def webhook_whatsapp():
     #EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
     mensaje="Telefono:"+data['entry'][0]['changes'][0]['value']['messages'][0]['from']
     mensaje=mensaje+"|Mensaje:"+data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
-    #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
-    f = open("texto.txt", "w")
-    f.write(mensaje)
-    f.close()
     #RETORNAMOS EL STATUS EN UN JSON
-    return jsonify({"status": "success"}, 200)
+    return str(mensaje)
 
 
 #INICIAMSO FLASK
