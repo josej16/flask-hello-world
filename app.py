@@ -72,7 +72,7 @@ def webhook_whatsapp():
     mensaje="Telefono:"+data['entry'][0]['changes'][0]['value']['messages'][0]['from']
     mensaje=mensaje+"|Mensaje:"+data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
     #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
-    f.append(mensaje)
+    f.append(data)
     enviar(data['entry'][0]['changes'][0]['value']['messages'][0]['from'])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
