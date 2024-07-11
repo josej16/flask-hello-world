@@ -87,13 +87,13 @@ def webhook_whatsapp():
     mensaje = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
     timestamp = data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
     #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
-    if telefono not in df['telefono'].values or df['step'][df['telefono'] == telefono][-1] == 'final':
+    if telefono not in df['telefono'].values or df['step'][df['telefono'] == telefono][-1:] == 'final':
       df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': 'Non_step'}
       enviar(telefono)
 
     else:
-      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[steps.index(df['step'][df['telefono'] == telefono][-1])]}
-      enviar(telefono, df['step'][df['telefono'] == telefono][-1])
+      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[steps.index(df['step'][df['telefono'] == telefono][-1:])]}
+      enviar(telefono, df['step'][df['telefono'] == telefono][-1:])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
 
