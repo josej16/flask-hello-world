@@ -2,12 +2,13 @@ from flask import Flask, jsonify, request
 #LIBRERIAS PARA ENVIAR MENSAJES VIA WHTSAPP
 import requests
 import json
+import pandas as pd
 app = Flask(__name__)
 #EJECUTAMOS ESTE CODIGO CUANDO SE INGRESE A LA RUTA ENVIAR
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = 'EAB1IWafZCmmkBO2DyguRIVy2KAnNAMKwE8uhZBsTfUVpnzZA5xtHFYNrE31LkfnGsxV17kHioK1KNoHIOvyqSQb3MCxfO9598V8WPqQjp6tfn0YTLZBKZB9NK8FkEZAtdBWSAJXpaIE5k8RihOFOPnpkNrB8BevpuMh0pQ0SzwnzfmRhhPyBVQkBKcmpUSMKSYiTZA1sndpP7TOKFqDaAYZD'
+  access_token = 'EAB1IWafZCmmkBO9r9nljATnZBZCWudDS1ZBatZC12G7FYZCFtAhOiOm47ZBrkjJfSdXU46VdLAMDB71RSfAyXUZAwBN3L8kUL9Hsv0tFYeqOmmLQYUzrwj4TRNxVe6DltBYo7ZAIJfmCzGfo6n7pJtZBqnmV9PMIWp9o3tVvG6Wzc0ZC3XSwMKpoRgWI1j9QGCcZBkiBGADg6DlVfn7XA4l3TJ74'
   phone_number_id = '309696275570080'
   recipient_phone_number = '584248365294'  # Número de teléfono del destinatario
 
@@ -28,7 +29,7 @@ def enviar(phone=None):
       "type": "text",
       "text": {
         "preview_url": True,
-        "body": "As requested, here'\''s the link to our latest product: https://www.meta.com/quest/quest-3/"
+        "body": "bienvenido taka taka"
       }
     }
   else:
@@ -39,7 +40,7 @@ def enviar(phone=None):
       "type": "text",
       "text": {
         "preview_url": True,
-        "body": "As requested, here'\''s the link to our latest product: https://www.meta.com/quest/quest-3/"
+        "body": "bienvenido taka taka"
       }
     }
   # Enviar el mensaje
@@ -52,7 +53,7 @@ def enviar(phone=None):
       print(f"Error al enviar el mensaje: {response.status_code}")
       print(response.text)
 
-
+df = pd.DataFrame({'telefono': [], 'mensaje': [], 'fecha': [], 'step': []})
 f = []
 
 @app.route("/webhook/", methods=["POST", "GET"])
@@ -69,10 +70,11 @@ def webhook_whatsapp():
     #RECIBIMOS TODOS LOS DATOS ENVIADO VIA JSON
     data=request.get_json()
     #EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
-    mensaje="Telefono:"+data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-    mensaje=mensaje+"|Mensaje:"+data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+    telefono = data['entry'][0]['changes'][0]['value']['messages'][0]['from']
+    mensaje = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+    timestamp = data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
     #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
-    f.append(data)
+    df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': 'Non_step'}
     enviar(data['entry'][0]['changes'][0]['value']['messages'][0]['from'])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
@@ -80,7 +82,7 @@ def webhook_whatsapp():
 @app.route("/recibir/", methods=["POST", "GET"])
 def recibir():
     
-    return str(f)
+    return str(df)
 #INICIAMSO FLASK
 if __name__ == "__main__":
   app.run(debug=True)
