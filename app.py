@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = 'EAB1IWafZCmmkBO9r9nljATnZBZCWudDS1ZBatZC12G7FYZCFtAhOiOm47ZBrkjJfSdXU46VdLAMDB71RSfAyXUZAwBN3L8kUL9Hsv0tFYeqOmmLQYUzrwj4TRNxVe6DltBYo7ZAIJfmCzGfo6n7pJtZBqnmV9PMIWp9o3tVvG6Wzc0ZC3XSwMKpoRgWI1j9QGCcZBkiBGADg6DlVfn7XA4l3TJ74'
+  access_token = 'EAB1IWafZCmmkBO2DyguRIVy2KAnNAMKwE8uhZBsTfUVpnzZA5xtHFYNrE31LkfnGsxV17kHioK1KNoHIOvyqSQb3MCxfO9598V8WPqQjp6tfn0YTLZBKZB9NK8FkEZAtdBWSAJXpaIE5k8RihOFOPnpkNrB8BevpuMh0pQ0SzwnzfmRhhPyBVQkBKcmpUSMKSYiTZA1sndpP7TOKFqDaAYZD'
   phone_number_id = '309696275570080'
   recipient_phone_number = '584248365294'  # Número de teléfono del destinatario
 
