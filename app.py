@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 #EJECUTAMOS ESTE CODIGO CUANDO SE INGRESE A LA RUTA ENVIAR
 @app.route("/enviar/", methods=["POST", "GET"])
-def enviar():
+def enviar(phone=None):
   # Tus credenciales de WhatsApp Business API
   access_token = 'EAB1IWafZCmmkBO9r9nljATnZBZCWudDS1ZBatZC12G7FYZCFtAhOiOm47ZBrkjJfSdXU46VdLAMDB71RSfAyXUZAwBN3L8kUL9Hsv0tFYeqOmmLQYUzrwj4TRNxVe6DltBYo7ZAIJfmCzGfo6n7pJtZBqnmV9PMIWp9o3tVvG6Wzc0ZC3XSwMKpoRgWI1j9QGCcZBkiBGADg6DlVfn7XA4l3TJ74'
   phone_number_id = '309696275570080'
@@ -19,18 +19,29 @@ def enviar():
       'Authorization': f'Bearer {access_token}',
       'Content-Type': 'application/json'
   }
-
+  if phone == None:
   # Datos del mensaje
-  payload = {
-    "messaging_product": "whatsapp",
-    "recipient_type": "individual",
-    "to": "584248365294",
-    "type": "text",
-    "text": {
-      "preview_url": True,
-      "body": "As requested, here'\''s the link to our latest product: https://www.meta.com/quest/quest-3/"
+    payload = {
+      "messaging_product": "whatsapp",
+      "recipient_type": "individual",
+      "to": recipient_phone_number,
+      "type": "text",
+      "text": {
+        "preview_url": True,
+        "body": "As requested, here'\''s the link to our latest product: https://www.meta.com/quest/quest-3/"
+      }
     }
-  }
+  else:
+     payload = {
+      "messaging_product": "whatsapp",
+      "recipient_type": "individual",
+      "to": phone,
+      "type": "text",
+      "text": {
+        "preview_url": True,
+        "body": "As requested, here'\''s the link to our latest product: https://www.meta.com/quest/quest-3/"
+      }
+    }
   # Enviar el mensaje
   response = requests.post(url, headers=headers, data=json.dumps(payload))
 
@@ -62,6 +73,7 @@ def webhook_whatsapp():
     mensaje=mensaje+"|Mensaje:"+data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
     #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
     f.append(mensaje)
+    enviar(data['entry'][0]['changes'][0]['value']['messages'][0]['from'])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
 
