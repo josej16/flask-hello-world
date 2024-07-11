@@ -82,7 +82,7 @@ def webhook_whatsapp():
 @app.route("/recibir/", methods=["POST", "GET"])
 def recibir():
     
-    return str(df)
+    return str(list(df))
 #INICIAMSO FLASK
 if __name__ == "__main__":
   app.run(debug=True)
