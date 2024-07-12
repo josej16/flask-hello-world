@@ -43,11 +43,11 @@ def enviar(phone=None, step=None):
         "body": {
           "text": "este es el catalogo mi pana"
         },
-        "action": {
-          "parameters": {
-            
-          }
-        },
+        "action": "name": "catalog_message",
+      "parameters": {
+        
+      }
+    },
         "footer": {
           "text": "este es el pie de pagina"
         }
