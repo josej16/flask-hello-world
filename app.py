@@ -46,7 +46,7 @@ def enviar(phone=None, step=None):
         "action": {
       "name": "catalog_message",
       "parameters": {
-        
+        "thumbnail_product_retailer_id": "9pa3foxu4h"
       }
     },
         "footer": {
