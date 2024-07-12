@@ -20,7 +20,7 @@ def enviar(phone=None, step=None):
       'Authorization': f'Bearer {access_token}',
       'Content-Type': 'application/json'
   }
-  if phone == None:
+  if step == 'Non_step':
   # Datos del mensaje
     payload = {
       "messaging_product": "whatsapp",
@@ -89,7 +89,7 @@ def webhook_whatsapp():
     #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
     if (telefono not in df['telefono'].values) or (list(df['step'][df['telefono'] == telefono][-1:])[0] == 'final'):
       df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': 'Non_step'}
-      enviar(telefono)
+      enviar(telefono, 'Non_step')
 
     else:
       df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[(steps.index(list(df['step'][df['telefono'] == telefono][-1:])[0]) + 1)]}
