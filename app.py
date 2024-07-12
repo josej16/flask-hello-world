@@ -25,7 +25,7 @@ def enviar(phone=None, step=None):
     payload = {
       "messaging_product": "whatsapp",
       "recipient_type": "individual",
-      "to": recipient_phone_number,
+      "to": phone,
       "type": "text",
       "text": {
         "preview_url": True,
