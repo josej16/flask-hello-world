@@ -44,7 +44,10 @@ def enviar(phone=None, step=None):
           "text": "este es el catalogo mi pana"
         },
         "action": {
-      "name": "catalog_message"
+      "name": "catalog_message",
+      "parameters": {
+        "thumbnail_product_retailer_id": "3zm3ahsb7a"
+      }
     },
         "footer": {
           "text": "este es el pie de pagina"
