@@ -42,7 +42,9 @@ def enviar(phone=None, step=None):
       "body" : {
         "text": "este es el catalogo mi pana"
       },
-      "footer": {
+    "action": {
+      "type": "view_catalog"}
+      ,"footer": {
         "text": "este es el pie de pagina"
       }
       }}
