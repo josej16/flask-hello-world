@@ -43,7 +43,8 @@ def enviar(phone=None, step=None):
         "body": {
           "text": "este es el catalogo mi pana"
         },
-        "action": "name": "catalog_message",
+        "action": {
+      "name": "catalog_message",
       "parameters": {
         
       }
