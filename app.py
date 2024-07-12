@@ -33,21 +33,26 @@ def enviar(phone=None, step=None):
       }
     }
   elif step == 'respuestamensajeinicial':
-     payload = {"messaging_product": "whatsapp",
-    "recipient_type": "individual",
-    "to": phone,
-    "type": "interactive",
-    "interactive" : {
-      "type" : "catalog_message",
-      "body" : {
-        "text": "este es el catalogo mi pana"
-      },
-    "action": {
-      "type": "view_catalog"}
-      ,"footer": {
-        "text": "este es el pie de pagina"
+     payload = {
+      "messaging_product": "whatsapp",
+      "recipient_type": "individual",
+      "to": phone,
+      "type": "interactive",
+      "interactive": {
+        "type": "catalog_message",
+        "body": {
+          "text": "este es el catalogo mi pana"
+        },
+        "action": {
+          "parameters": {
+            "product_retailer_id": "hszchvdwt8"
+          }
+        },
+        "footer": {
+          "text": "este es el pie de pagina"
+        }
       }
-      }}
+    }
   
   elif step == 'final':
      payload = {
