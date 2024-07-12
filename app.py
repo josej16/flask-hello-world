@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None, step=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = 'EAB1IWafZCmmkBO3Q8FCYfSeZAvn7ZCv2ZBZC1w09OTJdF1AdvZCd5OxTq19jHhySXrbTRX8xEbjgsbCRgxysuIGhFHqzYWrZBGVJYdqHrRCBMkdOWmdcZAzLoAHE7BzJgVmtCoSqCpZBqKCHqtClM61n0iZAWH6ZBuqaSyx0LhQhvcyAdrmw6DIE9wMW1ItEAWZC6QvUOeLNRd14fbkr6mxLLRIZD'
+  access_token = 'EAB1IWafZCmmkBOwwKCLxq9J75d7HWhcOZBfCp1cyOH9pOLbGp7i68mXOwyZAHZCCqmFAZCfXHUecxayp7OlVBiaqc3gAQuIeyCdvjgtOrzwPA8wgZCtDcENHezd5xb231IpaOaMp3j054Oy4SZCbcoxMqdHq5ozXJd6ZCzaEsXCOaZBq3DQamfDFbZBY9vMFQsRkNpJe1nZASRhArh9Mi7Sz2sZD'
   phone_number_id = '309696275570080'
   recipient_phone_number = '584248365294'  # Número de teléfono del destinatario
 
@@ -44,7 +44,7 @@ def enviar(phone=None, step=None):
       }
     }
   
-  else:
+  elif step == 'final':
      payload = {
       "messaging_product": "whatsapp",
       "recipient_type": "individual",
@@ -52,7 +52,7 @@ def enviar(phone=None, step=None):
       "type": "text",
       "text": {
         "preview_url": True,
-        "body": "bienvenido taka taka"
+        "body": "segun y que final"
       }
     }
   # Enviar el mensaje
@@ -67,7 +67,7 @@ def enviar(phone=None, step=None):
 
 df = pd.DataFrame({'telefono': [], 'mensaje': [], 'fecha': [], 'step': []})
 f = []
-steps = ['Non_step', 'respuestamensajeinicial']
+steps = ['Non_step', 'respuestamensajeinicial', 'final']
 
 @app.route("/webhook/", methods=["POST", "GET"])
 def webhook_whatsapp():
@@ -92,8 +92,8 @@ def webhook_whatsapp():
       enviar(telefono)
 
     else:
-      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[steps.index(df['step'][df['telefono'] == telefono][-1:])]}
-      enviar(telefono, df['step'][df['telefono'] == telefono][-1:])
+      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[steps.index(list(df['step'][df['telefono'] == telefono][-1:])[0]) + 1)]}
+      enviar(telefono, list(df['step'][df['telefono'] == telefono][-1:])[0])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
 
