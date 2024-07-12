@@ -92,7 +92,7 @@ def webhook_whatsapp():
       enviar(telefono)
 
     else:
-      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[steps.index(list(df['step'][df['telefono'] == telefono][-1:])[0]) + 1)]}
+      df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[(steps.index(list(df['step'][df['telefono'] == telefono][-1:])[0]) + 1)]}
       enviar(telefono, list(df['step'][df['telefono'] == telefono][-1:])[0])
     #RETORNAMOS EL STATUS EN UN JSON
     return str(mensaje)
