@@ -45,7 +45,7 @@ def enviar(phone=None, step=None):
         },
         "action": {
           "parameters": {
-            "product_retailer_id": "hszchvdwt8"
+            
           }
         },
         "footer": {
