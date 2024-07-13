@@ -47,7 +47,7 @@ def enviar(phone=None, step=None):
        "text": "optional footer text"
      },
      "action": {
-       "catalog_id": "715804413977145",
+       "catalog_id": 715804413977145,
        "product_retailer_id": "41mmw4pvnd"
      }
    }
