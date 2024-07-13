@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None, step=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = 'EAB1IWafZCmmkBO1Okggaoy3ByKRxx0ZA7jKFUQu5WVVAXdRvHO8U6q7XNPDKdptxSVbI8GvgUVZB7dJfQSz5VPOnb5ZBqbbcuu0z6BnC3O3BZAlkZClkkBWmas83yr6NxunAF3tSWcZB99GSXysz8XJom8uCjqZBgAq0lhDBTVNI6Oukly8cO2wI0LytMYq9fxhN9Elkun0ibb69DZCZBW9uQZD'
+  access_token = 'EAB1IWafZCmmkBO15ijFjoCOYTfStAUr6i5qzpZBQT5laSXnP370WODuqn7P1ZBZCAyMz1LU4uKLdmHNvHOKQI0zfZAZBsa4ateDHJ75qPltm5tM84ZCbBS70KvqOHTOUPNOXMRPTcYvjJevmZBZAZCbdd6IpNZCWgvdhT0QEaWvdihF4iiPnGcH4IFIx5f7jaReBU3guxYZB9NxsZAIlhC6jvE0oZD'
   phone_number_id = '309696275570080'
   recipient_phone_number = '584248365294'  # Número de teléfono del destinatario
 
@@ -46,7 +46,7 @@ def enviar(phone=None, step=None):
         "action": {
       "name": "catalog_message",
       "parameters": {
-        "thumbnail_product_retailer_id": "9pa3foxu4h"
+        "thumbnail_product_retailer_id": "41mmw4pvnd"
       }
     },
         "footer": {
