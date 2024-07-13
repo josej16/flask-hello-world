@@ -51,7 +51,7 @@ def enviar(phone=None, step=None):
        "product_retailer_id": "41mmw4pvnd"
      }
    }
- }'
+ }
 
   
   elif step == 'final':
