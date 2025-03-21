@@ -16,7 +16,9 @@ from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
 
 # --- Configuración del modelo LLM ---
-API_KEY = "AIzaSyCZ7g9rfNlVYS5eH7ffQ5bpr-iGuR-C-6k"
+API_KEY = os.environ.get("API_KEY")
+if API_KEY is None:
+    raise ValueError("The GEMINI_API_KEY environment variable is not set.")
 llm = ChatGoogleGenerativeAI(
     model="models/gemini-2.0-flash",
     google_api_key=API_KEY,
