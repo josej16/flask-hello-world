@@ -4,12 +4,15 @@ import requests
 import json
 import pandas as pd
 from chatbot_script import interactuar
+import os
 app = Flask(__name__)
 #EJECUTAMOS ESTE CODIGO CUANDO SE INGRESE A LA RUTA ENVIAR
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None, message=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = 'EAB1IWafZCmmkBO3n9x5WJHpuKjy4NshAMAM1eT78MTaohwwHKiPJpHTW2BwDWajLy32ryBPlN8b2zAdnj9H9cL2oZBZB6u5GFX0EZAmLIc4faYvXVLxAMSRpOcwZAj0HOOcWrTIb3hJnUCmBT9KnIx6FG9sKWBhVZARCZBTZCLhyDPiKFcvIWVLADF2mFmMnZBJCnWjatGrLBiL07KnLz56Hp6oq6UaIZD'
+  access_token = os.environ.get("access_token")
+  if access_token is None:
+    raise ValueError("The WHATSAPP_ACCESS_TOKEN environment variable is not set.")
   phone_number_id = '309696275570080'
   recipient_phone_number = '584248365294'  # Número de teléfono del destinatario
 
