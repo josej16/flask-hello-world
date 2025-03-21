@@ -3,10 +3,11 @@ from flask import Flask, jsonify, request
 import requests
 import json
 import pandas as pd
+from chatbot_script import interactuar
 app = Flask(__name__)
 #EJECUTAMOS ESTE CODIGO CUANDO SE INGRESE A LA RUTA ENVIAR
 @app.route("/enviar/", methods=["POST", "GET"])
-def enviar(phone=None, step=None):
+def enviar(phone=None, message=None):
   # Tus credenciales de WhatsApp Business API
   access_token = 'EAB1IWafZCmmkBO3n9x5WJHpuKjy4NshAMAM1eT78MTaohwwHKiPJpHTW2BwDWajLy32ryBPlN8b2zAdnj9H9cL2oZBZB6u5GFX0EZAmLIc4faYvXVLxAMSRpOcwZAj0HOOcWrTIb3hJnUCmBT9KnIx6FG9sKWBhVZARCZBTZCLhyDPiKFcvIWVLADF2mFmMnZBJCnWjatGrLBiL07KnLz56Hp6oq6UaIZD'
   phone_number_id = '309696275570080'
@@ -20,60 +21,27 @@ def enviar(phone=None, step=None):
       'Authorization': f'Bearer {access_token}',
       'Content-Type': 'application/json'
   }
-  if step == 'Non_step':
   # Datos del mensaje
-    payload = {
-      "messaging_product": "whatsapp",
-      "recipient_type": "individual",
-      "to": phone,
-      "type": "text",
-      "text": {
-        "preview_url": True,
-        "body": "bienvenido taka taka"
-      }
+  payload = {
+    "messaging_product": "whatsapp",
+    "recipient_type": "individual",
+    "to": phone,
+    "type": "text",
+    "text": {
+      "preview_url": True,
+      "body": message
     }
-  elif step == 'respuestamensajeinicial':
-     payload = {
-   "messaging_product": "whatsapp",
-   "recipient_type": "individual",
-   "to": phone,
-   "type": "interactive",
-   "interactive": {
-     "type": "product",
-     "body": {
-       "text": "optional body text"
-     },
-     "footer": {
-       "text": "optional footer text"
-     },
-     "action": {
-       "catalog_id": 715804413977145,
-       "product_retailer_id": "41mmw4pvnd"
-     }
-   }
- }
-
-  
-  elif step == 'final':
-     payload = {
-      "messaging_product": "whatsapp",
-      "recipient_type": "individual",
-      "to": phone,
-      "type": "text",
-      "text": {
-        "preview_url": True,
-        "body": "segun y que final"
-      }
-    }
+  }
+    
   # Enviar el mensaje
   response = requests.post(url, headers=headers, data=json.dumps(payload))
 
-# Verificar el resultado
+  # Verificar el resultado
   if response.status_code == 200:
-      return "Mensaje enviado exitosamente. osi osi"
+    return "Mensaje enviado exitosamente. osi osi"
   else:
-      print(f"Error al enviar el mensaje: {response.status_code}")
-      print(response.text)
+    print(f"Error al enviar el mensaje: {response.status_code}")
+    print(response.text)
 
 df = pd.DataFrame({'telefono': [], 'mensaje': [], 'fecha': [], 'step': []})
 f = []
@@ -96,7 +64,14 @@ def webhook_whatsapp():
     telefono = data['entry'][0]['changes'][0]['value']['messages'][0]['from']
     mensaje = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
     timestamp = data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
-    #ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
+
+    # Obtener respuesta del chatbot
+    respuesta_chatbot = interactuar(mensaje, telefono)
+
+    # Enviar la respuesta al usuario
+    enviar(telefono, respuesta_chatbot)
+
+    # Escribimos el número de teléfono y el mensaje en el archivo texto
     if (telefono not in df['telefono'].values) or (list(df['step'][df['telefono'] == telefono][-1:])[0] == 'final'):
       df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': 'Non_step'}
       enviar(telefono, 'Non_step')
@@ -105,7 +80,7 @@ def webhook_whatsapp():
       df.loc[len(df),:] = {'telefono':telefono , 'mensaje': mensaje, 'fecha': timestamp, 'step': steps[(steps.index(list(df['step'][df['telefono'] == telefono][-1:])[0]) + 1)]}
       enviar(telefono, list(df['step'][df['telefono'] == telefono][-1:])[0])
     #RETORNAMOS EL STATUS EN UN JSON
-    return str(mensaje)
+    return str(respuesta_chatbot)
 
 @app.route("/recibir/", methods=["POST", "GET"])
 def recibir():
