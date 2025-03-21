@@ -32,11 +32,11 @@ def inicializar_base_datos():
     print("[INFO] Inicializando base de datos...")
     try:
         conn = pymysql.connect(
-            host="127.0.0.1",
-            user="root",
-            port=3306,
-            password="root",
-            database="analytics_chatbot_ia",
+            host=os.environ.get("API_KEY"),
+            user=os.environ.get("API_KEY"),
+            port=int(os.environ.get("API_KEY")),
+            password=os.environ.get("API_KEY"),
+            database="analytics_remax",
             cursorclass=pymysql.cursors.DictCursor
         )
         cursor = conn.cursor()
