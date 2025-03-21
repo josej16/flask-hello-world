@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/enviar/", methods=["POST", "GET"])
 def enviar(phone=None, message=None):
   # Tus credenciales de WhatsApp Business API
-  access_token = os.environ.get("ACESS_TOKEN")
+  access_token = os.environ.get("ACCESS_TOKEN")
   if access_token is None:
     raise ValueError("The WHATSAPP_ACCESS_TOKEN environment variable is not set.")
   phone_number_id = '309696275570080'
