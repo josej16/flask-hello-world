@@ -34,7 +34,7 @@ def inicializar_base_datos():
         conn = pymysql.connect(
             host=os.environ.get("HOST"),
             user=os.environ.get("USER"),
-            port=int(os.environ.get("PORT")),
+            port=int(os.environ.get("PORT_DATABASE")),
             password=os.environ.get("PASSWORD"),
             database="analytics_remax",
             cursorclass=pymysql.cursors.DictCursor
